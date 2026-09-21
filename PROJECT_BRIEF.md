@@ -12,7 +12,7 @@ Deadline shown: Wednesday, 23 September (year omitted in the source).
 - [x] Paginated data view with previous/next controls and page indicator — 15 points. Stable ordering and page reset when filters or search change.
 - [x] Search across relevant text fields, combined with filters — 10 points.
 - [ ] Email/password sign-up and login, with the dashboard protected — 25 bonus points.
-- [x] GitHub repository with incremental, meaningful commit history: https://github.com/johnjoev/liner-music-explorer — 10 points. Currently private; reviewer access remains required before submission.
+- [x] Public GitHub repository with incremental, meaningful commit history: https://github.com/johnjoev/liner-music-explorer — 10 points. Public visibility verified on 21 September 2026.
 - [ ] Working Vercel deployment and shareable URL — 10 points.
 
 Base total: 100 points. Including authentication: 125 points.
