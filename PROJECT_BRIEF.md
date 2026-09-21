@@ -1,16 +1,16 @@
 # Hiring test: data exploration dashboard
 
-Source: user-provided hiring-test screenshot. Its examples illustrate the requirements; they do not mandate a particular dataset. Dataset selection is pending.
+Source: user-provided hiring-test screenshot. Its examples illustrate the requirements; they do not mandate a particular dataset. Selected dataset: Chinook music catalogue.
 
 Deadline shown: Wednesday, 23 September (year omitted in the source).
 
 ## Acceptance checklist
 
-- [ ] Dashboard using a documented dataset of our choice — 10 points.
+- [x] Dashboard using a documented dataset of our choice — 10 points.
 - [ ] Data imported into cloud-hosted PostgreSQL and queried by the application backend — 20 points. Local CSV/JSON must not be the runtime data source.
-- [ ] Multi-select filters with cascading options — 25 points. Options in later filters must reflect earlier selections; invalid downstream selections must be removed.
-- [ ] Paginated data view with previous/next controls and page indicator — 15 points. Use stable ordering and reset the page when filters or search change.
-- [ ] Search across relevant text fields, combined with filters — 10 points.
+- [x] Multi-select filters with cascading options — 25 points. Options in later filters reflect earlier selections; downstream selections are cleared when upstream selections change.
+- [x] Paginated data view with previous/next controls and page indicator — 15 points. Stable ordering and page reset when filters or search change.
+- [x] Search across relevant text fields, combined with filters — 10 points.
 - [ ] Email/password sign-up and login, with the dashboard protected — 25 bonus points.
 - [ ] GitHub repository with incremental, meaningful commit history and a shareable link — 10 points.
 - [ ] Working Vercel deployment and shareable URL — 10 points.
@@ -19,7 +19,7 @@ Base total: 100 points. Including authentication: 125 points.
 
 ## Proposed implementation
 
-Next.js and TypeScript for the interface and backend; Supabase for hosted PostgreSQL and authentication; Vercel for deployment. Final dataset and available accounts are being clarified with the user.
+Next.js and TypeScript for the interface and backend; Supabase for hosted PostgreSQL and authentication; Vercel for deployment. User has GitHub and requested that all local work be completed before Supabase and Vercel setup.
 
 Database queries should perform search, filtering, total counts, and pagination. Do not fetch the entire dataset and paginate only in the browser. Use parameterized queries or typed database RPC arguments. Keep privileged credentials on the server, out of Git.
 
@@ -38,4 +38,4 @@ Build in reviewable stages: project setup; schema and import; data queries; dash
 
 ## Delivery status
 
-Planning only. Application, database, repository publication, and deployment are not yet completed.
+Local application, actual PostgreSQL query tests, browser interaction tests, database import scripts, authentication implementation, and setup documentation are complete. Authentication is not checked off because live email/password flows still require Supabase. Cloud PostgreSQL and Vercel deployment are intentionally deferred. The local preview uses the same SQL through development-only PGlite, not a cloud connection.
