@@ -30,13 +30,14 @@ begin
  pages := greatest(1,ceil(n::numeric/size)::integer);
  p := least(greatest(coalesce(page_number,1),1),pages);
  with searched as (
- select * from tracks t where coalesce(q,'')='' or strpos(lower(concat_ws(' ',t.title,t.artist,t.album,t.composer)),lower(q))>0
+ select * from tracks
  ), genre_filtered as (
  select * from searched t where coalesce(cardinality(genre_ids),0)=0 or t.genre_id=any(genre_ids)
  ), artist_filtered as (
  select * from genre_filtered t where coalesce(cardinality(artist_ids),0)=0 or t.artist_id=any(artist_ids)
  ), filtered as (
- select * from artist_filtered t where coalesce(cardinality(album_ids),0)=0 or t.album_id=any(album_ids)
+ select * from artist_filtered t where (coalesce(cardinality(album_ids),0)=0 or t.album_id=any(album_ids))
+ and (coalesce(q,'')='' or strpos(lower(concat_ws(' ',t.title,t.artist,t.album,t.composer)),lower(q))>0)
  ), page_rows as (
  select id,title,artist,album,genre,composer,milliseconds,price from filtered order by lower(title),id limit size offset (p-1)*size
  ), genre_options as (select distinct genre_id id,genre name from searched),
