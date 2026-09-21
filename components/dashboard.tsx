@@ -127,12 +127,13 @@ export default function Dashboard({
   const [retry, setRetry] = useState(0);
   const [jump, setJump] = useState('1');
   useEffect(() => {
+    if (query.trim() === search) return;
     const timer = setTimeout(() => {
       setSearch(query.trim());
       setPage(1);
     }, 300);
     return () => clearTimeout(timer);
-  }, [query]);
+  }, [query, search]);
   useEffect(() => {
     if (setup) return;
     const controller = new AbortController();
@@ -255,6 +256,13 @@ export default function Dashboard({
           <span className="source-label">
             <Disc3 size={14} /> CHINOOK COLLECTION
           </span>
+          {email && (
+            <form className="mobile-account" action="/auth/signout" method="post">
+              <button className="icon-button" aria-label="Sign out">
+                <LogOut size={18} /> Sign out
+              </button>
+            </form>
+          )}
         </header>
         <div className="page-content">
           <div className="page-heading">
@@ -413,7 +421,13 @@ export default function Dashboard({
                   </div>
                 )}
               </div>
-              <div className="table-wrap" aria-busy={loading}>
+              <div
+                className="table-wrap"
+                aria-busy={loading}
+                tabIndex={0}
+                role="region"
+                aria-label="Track results; scroll to see more rows and columns"
+              >
                 <table>
                   <thead>
                     <tr>

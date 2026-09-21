@@ -5,7 +5,8 @@ test('browse, cascade multiple filters, search, paginate, and recover from empty
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/');
-  await expect(page.getByText('Showing 1–20 of 3,503')).toBeVisible();
+  // The first CI request compiles the route and initializes the PostgreSQL WASM engine.
+  await expect(page.getByText('Showing 1–20 of 3,503')).toBeVisible({ timeout: 20_000 });
   await expect(page.locator('tbody tr')).toHaveCount(20);
   await page.screenshot({ path: 'test-results/dashboard-desktop.png', fullPage: true });
   await page.getByRole('button', { name: 'Next page', exact: true }).click();

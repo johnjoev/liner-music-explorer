@@ -8,3 +8,4 @@ playwright-report/
 chinook-source.sql
 *.tsbuildinfo
 *.log
+next-env.d.ts

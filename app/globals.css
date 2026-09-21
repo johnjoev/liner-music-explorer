@@ -1206,6 +1206,18 @@ th {
     font-size: 12px;
   }
 }
+.mobile-account {
+  display: none;
+}
+@media (max-width: 760px) {
+  .mobile-account {
+    display: block;
+  }
+  .mobile-account button {
+    gap: 6px;
+    font-size: 14px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
