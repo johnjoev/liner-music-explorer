@@ -13,7 +13,7 @@ Deadline shown: Wednesday, 23 September (year omitted in the source).
 - [x] Search across relevant text fields, combined with filters — 10 points.
 - [ ] Email/password sign-up and login, with the dashboard protected — 25 bonus points.
 - [x] Public GitHub repository with incremental, meaningful commit history: https://github.com/johnjoev/liner-music-explorer — 10 points. Public visibility verified on 21 September 2026.
-- [ ] Working Vercel deployment and shareable URL — 10 points.
+- [x] Working Vercel deployment: https://liner-music-explorer.vercel.app — 10 points. Production is Ready; login returns HTTP 200 and protected API returns HTTP 401 when signed out.
 
 Base total: 100 points. Including authentication: 125 points.
 
@@ -38,4 +38,4 @@ Build in reviewable stages: project setup; schema and import; data queries; dash
 
 ## Delivery status
 
-Local application, actual PostgreSQL query tests, browser interaction tests, database import scripts, authentication implementation, and setup documentation are complete. Authentication is not checked off because live email/password flows still require Supabase. Cloud PostgreSQL and Vercel deployment are intentionally deferred. The local preview uses the same SQL through development-only PGlite, not a cloud connection.
+Local application, actual PostgreSQL query tests, browser interaction tests, database import scripts, authentication implementation, and setup documentation are complete. Authentication is not checked off because live email/password flows still require a confirmed-account verification. Supabase now contains 3,503 tracks and Vercel production is deployed at https://liner-music-explorer.vercel.app. Production Site URL and the /auth/callback redirect are configured. The cloud-data and authentication checkboxes remain open until an authenticated live dashboard session verifies the full integration. The local preview uses the same SQL through development-only PGlite, not a cloud connection.

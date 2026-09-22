@@ -2,7 +2,11 @@
 
 A searchable music catalogue built for the dashboard hiring assignment. Browse 3,503 Chinook tracks using cascading multi-select filters, server-side search, and pagination.
 
-**Status:** local implementation and automated checks are complete. Supabase connection, live authentication verification, and Vercel deployment are intentionally deferred. The local preview is not the deployed submission.
+**Live app:** https://liner-music-explorer.vercel.app
+
+**Public repository:** https://github.com/johnjoev/liner-music-explorer
+
+**Status (23 September 2026):** deployed successfully to Vercel with Supabase configuration. Cloud PostgreSQL contains 3,503 tracks. Production authentication redirects are configured; the login page returns HTTP 200 and anonymous catalogue requests return HTTP 401. A confirmed-email account is required to access the dashboard. The final live sign-up/sign-in and authenticated dashboard check awaits the project owner.
 
 ## Run the working local preview
 
@@ -23,7 +27,7 @@ Open http://127.0.0.1:3000. This explicitly enables a development-only PostgreSQ
 - Case-insensitive, literal substring search across track, artist, album, and composer. Search combines with selected filters and is debounced by 300 ms.
 - Server-side pagination: 10, 20, or 50 rows, previous/next, current page, total count, and jump-to-page (press Enter).
 - Matching track/artist/album counts, total listening duration, and a top-five genre breakdown.
-- Email/password sign-up and login, email-confirmation callback, sign-out, server-verified access, and database row-level security. Code is implemented; live verification requires Supabase.
+- Email/password sign-up and login, email-confirmation callback, sign-out, server-verified access, and database row-level security. Deployed with Supabase; final confirmed-email login verification is pending.
 - Responsive interface, keyboard-accessible checkboxes, loading/error/empty states, and cancelled stale requests.
 
 ## Architecture
@@ -36,7 +40,7 @@ Browser dashboard
       ← matching page, counts, valid filter options, genre distribution
 ```
 
-Next.js 16 App Router and TypeScript provide the UI and backend. Supabase provides hosted PostgreSQL and password authentication. Vercel is the intended host. The browser never downloads the entire track dataset to implement filtering or pagination. Dropdown options are returned separately from the requested track page.
+Next.js 16 App Router and TypeScript provide the UI and backend. Supabase provides hosted PostgreSQL and password authentication. Vercel hosts the production app. The browser never downloads the entire track dataset to implement filtering or pagination. Dropdown options are returned separately from the requested track page.
 
 `explore_catalogue` is a `SECURITY INVOKER` function, so RLS remains active. Only the authenticated role has read/execute privileges; neither anonymous users nor authenticated users may modify tracks. The backend verifies the user with `getUser()`, and the Next.js proxy refreshes session cookies. No service-role key is required.
 
@@ -57,7 +61,7 @@ For this 3,503-row dataset, a straightforward substring search is adequate. At s
 | `lib/local-preview.ts`        | Explicit development-only PostgreSQL preview                                   |
 | `tests/`                      | Database and browser integration tests                                         |
 
-## Connect Supabase later
+## Supabase setup (for reproducing this project)
 
 1. Create a Supabase project. In its SQL Editor, run `database/001_schema.sql`, then `database/002_seed.sql`. These scripts create the application table; they do not drop or create the hosting database.
 2. Copy `.env.example` to `.env.local`. Fill `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` using the project's Connect dialog. Use the publishable key, never a service-role or secret key. `.env.local` is ignored by Git.
@@ -67,7 +71,7 @@ For this 3,503-row dataset, a straightforward substring search is adequate. At s
 
 The seed includes all Chinook media tracks, including some TV and video entries. Prices are USD. Duration statistics include those entries.
 
-## Deploy to Vercel later
+## Vercel deployment (for reproducing this project)
 
 1. Import the GitHub repository into Vercel as a Next.js project.
 2. Set the two Supabase environment variables above for the required deployment environments. Do not set `LOCAL_PREVIEW`.
@@ -89,7 +93,7 @@ Database tests run the actual schema, seed, and RPC in PGlite, including role pe
 
 The production smoke test runs on port 3001 after a build, deliberately sets the preview flag, and confirms that production still refuses local preview and rejects a cross-origin sign-out request.
 
-Passing local tests does not establish that Supabase email delivery, cloud credentials, hosted RLS integration, or the Vercel deployment work. Those checks remain pending until the services are configured.
+Passing local tests does not establish that Supabase email delivery, cloud credentials, hosted RLS integration, or the Vercel deployment work. The cloud import, production deployment, redirect configuration, and anonymous API protection are verified. Live email delivery and the authenticated dashboard flow still need a confirmed account check.
 
 ## Data source and attribution
 
